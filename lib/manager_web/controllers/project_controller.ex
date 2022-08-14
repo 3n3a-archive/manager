@@ -4,6 +4,8 @@ defmodule ManagerWeb.ProjectController do
   alias Manager.Website
   alias Manager.Website.Project
 
+  require Logger
+
   def index(conn, _params) do
     projects = Website.list_projects()
     render(conn, "index.html", projects: projects)
@@ -17,9 +19,11 @@ defmodule ManagerWeb.ProjectController do
   def create(conn, %{"project" => project_params}) do
     case Website.create_project(project_params) do
       {:ok, project} ->
+        trigger_frontend_deployment()
         conn
         |> put_flash(:info, "Project created successfully.")
         |> redirect(to: Routes.project_path(conn, :show, project))
+
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -42,6 +46,7 @@ defmodule ManagerWeb.ProjectController do
 
     case Website.update_project(project, project_params) do
       {:ok, project} ->
+        trigger_frontend_deployment()
         conn
         |> put_flash(:info, "Project updated successfully.")
         |> redirect(to: Routes.project_path(conn, :show, project))
@@ -55,8 +60,15 @@ defmodule ManagerWeb.ProjectController do
     project = Website.get_project!(id)
     {:ok, _project} = Website.delete_project(project)
 
+    trigger_frontend_deployment()
+
     conn
     |> put_flash(:info, "Project deleted successfully.")
     |> redirect(to: Routes.project_path(conn, :index))
+  end
+
+  def trigger_frontend_deployment() do
+    HTTPoison.start
+    HTTPoison.post!(System.get_env("FRONTEND_WEBHOOK"), "")
   end
 end

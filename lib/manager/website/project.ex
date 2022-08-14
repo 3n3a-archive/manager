@@ -19,4 +19,5 @@ defmodule Manager.Website.Project do
     |> validate_required([:title, :href])
     |> unique_constraint(:title)
   end
+
 end
