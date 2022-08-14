@@ -44,3 +44,7 @@ services:
 
 networks:
     manager:
+
+volumes:
+  pgadmin4-data:
+  pgdb-data:
