@@ -25,9 +25,11 @@ defmodule ManagerWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", ManagerWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", ManagerWeb.Api do
+    pipe_through :api
+
+    resources "/projects", ProjectController
+  end
 
   # Enables LiveDashboard only for development
   #
