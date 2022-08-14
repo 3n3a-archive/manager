@@ -1,5 +1,8 @@
 import Config
 
+# Only in tests, remove the complexity from the password hashing algorithm
+config :argon2_elixir, t_cost: 1, m_cost: 8
+
 # Configure your database
 #
 # The MIX_TEST_PARTITION environment variable can be used
@@ -17,8 +20,11 @@ config :manager, Manager.Repo,
 # you can enable the server option below.
 config :manager, ManagerWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "/v9b4HD9uhPMsQW/YdvSlYLSxFW6KefCMrXnmeAinVRH+XsJ8p3Nm/LWRAFDco+W",
+  secret_key_base: "DdP2qJ9Wch3hnfdeWMeSi6g37RvQTngxRarCSeNTGJjbNm/ByEExSD94py+GUVlY",
   server: false
+
+# In test we don't send emails.
+config :manager, Manager.Mailer, adapter: Swoosh.Adapters.Test
 
 # Print only warnings and errors during test
 config :logger, level: :warn

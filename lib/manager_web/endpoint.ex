@@ -7,7 +7,7 @@ defmodule ManagerWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_manager_key",
-    signing_salt: "y3s+0SZP"
+    signing_salt: "sRG58J+A"
   ]
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]

@@ -23,7 +23,7 @@ config :manager, ManagerWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "b39VtA6DLohRvTVyo1oPGAKRvSE43k3jEK6WpRchaJL2hhqyZsRnqlL7jlsyru+n",
+  secret_key_base: "Z3Q9kr4jsYbByCKrcMnQVJ9v07Lvfm3j7mQHMZyCeHf631gUwI+OQl2DvdCzOz6q",
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
     esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
