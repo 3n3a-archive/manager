@@ -43,7 +43,7 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base
 
-  config :manager_web, ManagerWeb.Endpoint,
+  config :manager_api, ManagerApi.Endpoint,
     http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.

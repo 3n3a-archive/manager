@@ -74,6 +74,7 @@ COPY config/runtime.exs config/
 #COPY rel rel
 RUN mix release
 
+
 ########################################################
 #                        RUNNER                        #
 ########################################################
@@ -101,6 +102,9 @@ ENV MIX_ENV="prod"
 # Only copy the final release from the build stage
 COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/manager_umbrella ./
 
+# Copy Entrypoint
+COPY entrypoint.sh ./entrypoint.sh
+
 USER nobody
 
-ENTRYPOINT [ "/app/bin/manager_umbrella" ]
+ENTRYPOINT [ "/app/entrypoint.sh" ]
