@@ -3,7 +3,7 @@ defmodule Manager.School.Exam do
   import Ecto.Changeset
 
   schema "exams" do
-    field :mark, :integer
+    field :mark, :float
     field :name, :string
     field :status, Ecto.Enum, values: [:draft, :live, :trash], default: :draft
     field :type, Ecto.Enum, values: [:uk, :bf]
