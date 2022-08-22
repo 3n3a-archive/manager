@@ -18,7 +18,10 @@ defmodule ManagerWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-    resources "/projects", ProjectController
+    resources "/homepage/projects", ProjectController
+
+    resources "/school/subjects", SubjectController
+    resources "/school/exams", ExamController
   end
 
   # Other scopes may use custom stacks.

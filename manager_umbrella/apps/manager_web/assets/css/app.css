@@ -7,6 +7,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
   grid-gap: 1rem;
+  padding-bottom: 4em;
 }
 
 .item {

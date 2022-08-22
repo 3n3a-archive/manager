@@ -23,7 +23,9 @@ defmodule ManagerApi.Router do
   scope "/", ManagerApi do
     pipe_through :api
 
-    get "/projects", ProjectController, :index
+    get "/homepage/projects", ProjectController, :index
+
+    resources "/school/exams", ExamController, except: [:new, :edit]
   end
 
 

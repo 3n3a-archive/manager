@@ -1,0 +1,28 @@
+<h1>Show Exam</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @exam.name %>
+  </li>
+
+  <li>
+    <strong>Mark:</strong>
+    <%= @exam.mark %>
+  </li>
+
+  <li>
+    <strong>Type:</strong>
+    <%= @exam.type %>
+  </li>
+
+  <li>
+    <strong>Status:</strong>
+    <%= @exam.status %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.exam_path(@conn, :edit, @exam) %></span> |
+<span><%= link "Back", to: Routes.exam_path(@conn, :index) %></span>
