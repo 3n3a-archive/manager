@@ -12,7 +12,6 @@ defmodule Manager.Repo.Migrations.CreateExams do
       timestamps()
     end
 
-    create unique_index(:exams, [:name])
     create index(:exams, [:subject_id])
   end
 end
