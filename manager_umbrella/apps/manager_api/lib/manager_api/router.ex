@@ -5,16 +5,27 @@ defmodule ManagerApi.Router do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
-    plug :put_root_layout, {ManagerWeb.LayoutView, :root}
+    plug :put_root_layout, {ManagerApi.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
 
   pipeline :api do
     plug :accepts, ["json"]
-
-    
   end
+
+  scope "/", ManagerApi do
+    pipe_through :browser
+
+    get "/", PageController, :index
+  end
+
+  scope "/", ManagerApi do
+    pipe_through :api
+
+    get "/projects", ProjectController, :index
+  end
+
 
   # Enables LiveDashboard only for development
   #
