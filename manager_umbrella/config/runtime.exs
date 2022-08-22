@@ -43,12 +43,22 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base
 
+  config :manager_web, ManagerWeb.Endpoint,
+    http: [
+      # Enable IPv6 and bind on all interfaces.
+      # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
+      ip: {0, 0, 0, 0, 0, 0, 0, 0},
+      port: String.to_integer(System.get_env("PORT_API") || "5000")
+    ],
+    secret_key_base: secret_key_base
+
   # ## Using releases
   #
   # If you are doing OTP releases, you need to instruct Phoenix
   # to start each relevant endpoint:
   #
-  #     config :manager_web, ManagerWeb.Endpoint, server: true
+  config :manager_web, ManagerWeb.Endpoint, server: true
+  config :manager_api, ManagerApi.Endpoint, server: true
   #
   # Then you can assemble a release by calling `mix release`.
   # See `mix help release` for more information.
