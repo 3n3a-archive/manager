@@ -6,15 +6,20 @@ defmodule ManagerWeb.ExamController do
 
   def index(conn, _params) do
     exams = School.list_exams()
+
     render(conn, "index.html", exams: exams)
   end
 
   def new(conn, _params) do
     changeset = School.change_exam(%Exam{})
-    render(conn, "new.html", changeset: changeset)
+    subject_list = School.select_list_subjects()
+    
+    render(conn, "new.html", changeset: changeset, subject_list: subject_list)
   end
 
   def create(conn, %{"exam" => exam_params}) do
+    subject_list = School.select_list_subjects()
+
     case School.create_exam(exam_params) do
       {:ok, exam} ->
         conn
@@ -22,7 +27,7 @@ defmodule ManagerWeb.ExamController do
         |> redirect(to: Routes.exam_path(conn, :show, exam))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, subject_list: subject_list)
     end
   end
 
@@ -34,11 +39,14 @@ defmodule ManagerWeb.ExamController do
   def edit(conn, %{"id" => id}) do
     exam = School.get_exam!(id)
     changeset = School.change_exam(exam)
-    render(conn, "edit.html", exam: exam, changeset: changeset)
+    subject_list = School.select_list_subjects()
+
+    render(conn, "edit.html", exam: exam, changeset: changeset, subject_list: subject_list)
   end
 
   def update(conn, %{"id" => id, "exam" => exam_params}) do
     exam = School.get_exam!(id)
+    subject_list = School.select_list_subjects()
 
     case School.update_exam(exam, exam_params) do
       {:ok, exam} ->
@@ -47,7 +55,7 @@ defmodule ManagerWeb.ExamController do
         |> redirect(to: Routes.exam_path(conn, :show, exam))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", exam: exam, changeset: changeset)
+        render(conn, "edit.html", exam: exam, changeset: changeset, subject_list: subject_list)
     end
   end
 

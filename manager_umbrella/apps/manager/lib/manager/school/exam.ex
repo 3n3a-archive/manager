@@ -5,7 +5,7 @@ defmodule Manager.School.Exam do
   schema "exams" do
     field :mark, :integer
     field :name, :string
-    field :status, Ecto.Enum, values: [:draft, :live, :trash]
+    field :status, Ecto.Enum, values: [:draft, :live, :trash], default: :draft
     field :type, Ecto.Enum, values: [:uk, :bf]
     field :subject_id, :id
 
@@ -16,7 +16,6 @@ defmodule Manager.School.Exam do
   def changeset(exam, attrs) do
     exam
     |> cast(attrs, [:name, :mark, :type, :status])
-    |> validate_required([:name, :mark, :type, :status])
-    |> unique_constraint(:name)
+    |> validate_required([:name, :mark, :type, :status, :subject_id])
   end
 end

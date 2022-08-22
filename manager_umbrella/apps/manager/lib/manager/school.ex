@@ -102,6 +102,9 @@ defmodule Manager.School do
     Exam.changeset(exam, attrs)
   end
 
+
+  ###########################################3
+
   alias Manager.School.Subject
 
   @doc """
@@ -115,6 +118,19 @@ defmodule Manager.School do
   """
   def list_subjects do
     Repo.all(Subject)
+  end
+
+  @doc """
+  Returns a list of subjects for select tags
+
+  ## Examples
+
+      iex> select_list_subjects()
+      [%Subject{}, ...]
+
+  """
+  def select_list_subjects do
+    Repo.all from p in Subject, select: {p.name, p.id}
   end
 
   @doc """

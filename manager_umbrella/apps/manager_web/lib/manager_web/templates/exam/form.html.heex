@@ -6,19 +6,23 @@
   <% end %>
 
   <%= label f, :name %>
-  <%= text_input f, :name %>
+  <%= text_input f, :name, required: true %>
   <%= error_tag f, :name %>
 
   <%= label f, :mark %>
-  <%= number_input f, :mark %>
+  <%= number_input f, :mark, min: 1, max: 6, required: true %>
   <%= error_tag f, :mark %>
 
+  <%= label f, :subject_id %>
+  <%= select f, :subject_id, @subject_list, prompt: "Choose a subject" %>
+  <%= error_tag f, :subject_id %>
+
   <%= label f, :type %>
-  <%= select f, :type, Ecto.Enum.values(Manager.School.Exam, :type), prompt: "Choose a value" %>
+  <%= select f, :type, Ecto.Enum.values(Manager.School.Exam, :type), prompt: "Choose a value", required: true %>
   <%= error_tag f, :type %>
 
   <%= label f, :status %>
-  <%= select f, :status, Ecto.Enum.values(Manager.School.Exam, :status), prompt: "Choose a value" %>
+  <%= select f, :status, Ecto.Enum.values(Manager.School.Exam, :status), prompt: "Choose a value", required: true  %>
   <%= error_tag f, :status %>
 
   <div>

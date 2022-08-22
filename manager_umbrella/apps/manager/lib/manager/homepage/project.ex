@@ -7,7 +7,7 @@ defmodule Manager.Homepage.Project do
     field :color, :string
     field :customBg, :string
     field :href, :string
-    field :status, Ecto.Enum, values: [:draft, :live, :trash]
+    field :status, Ecto.Enum, values: [:draft, :live, :trash], default: :draft
     field :title, :string
 
     timestamps()
