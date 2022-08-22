@@ -17,7 +17,7 @@
     <tr>
       <td><%= exam.name %></td>
       <td><%= exam.mark %></td>
-      <td><%= get_subject_name(exam) %></td>
+      <td><%= link get_subject_name(exam), to: Routes.subject_path(@conn, :show, exam) %></td>
       <td><%= exam.type %></td>
       <td><%= exam.status %></td>
 

@@ -15,7 +15,7 @@ defmodule Manager.School.Exam do
   @doc false
   def changeset(exam, attrs) do
     exam
-    |> cast(attrs, [:name, :mark, :type, :status])
+    |> cast(attrs, [:name, :mark, :type, :status, :subject_id])
     |> validate_required([:name, :mark, :type, :status, :subject_id])
   end
 end

@@ -14,7 +14,7 @@
 
   <li>
     <strong>Subject:</strong>
-    <%= get_subject_name(@exam) %>
+    <%= link get_subject_name(@exam), to: Routes.subject_path(@conn, :show, @exam) %>
   </li>
 
   <li>
