@@ -4,13 +4,13 @@
 
 ## Architecture
 
-* Manager
+* `Manager`
   * Database Connector
   * Ecto Repository 
-* Manager API
+* `Manager API`
   * JSON API
   * for statically generated Frontends
-* Manager Web
+* `Manager Web`
   * Admin Interface for Content Managment
 
 ![Diagram of Architecture of Manager](.github/assets/architecture_diagram.png)
