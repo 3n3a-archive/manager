@@ -10,10 +10,10 @@ defmodule WebhookAdapter do
     url = System.get_env("WEBHOOK_URL", "please_configure_url")
     api_key = System.get_env("WEBHOOK_KEY", "please_configure_key")
 
-    body = %{"part" => part}
+    body = %{"part" => part, "key" => api_key}
     result = Jason.encode!(body)
 
-    options = [{"X-API-KEY", api_key}, {"Content-Type", "application/json"}]
+    options = [{"Content-Type", "application/json"}]
 
     HTTPoison.start
     {:ok, response} = HTTPoison.post!(url, result, options)
