@@ -1,8 +1,7 @@
 version: '3'
 services:
     webserver:
-        image: 3n3a/manager:2.0.1
-        # command: eval "ManagerWeb.Release.migrate"
+        image: 3n3a/manager:2.0.11
         depends_on:
             - db
         environment:
