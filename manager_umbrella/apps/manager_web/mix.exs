@@ -50,7 +50,8 @@ defmodule ManagerWeb.MixProject do
       {:gettext, "~> 0.18"},
       {:manager, in_umbrella: true},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:httpoison, "~> 1.8"}
     ]
   end
 

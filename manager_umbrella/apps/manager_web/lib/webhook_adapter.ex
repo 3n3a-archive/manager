@@ -3,20 +3,20 @@ defmodule WebhookAdapter do
     Adapt to various Webhooks
   "
 
+  require Logger
+
   def trigger_deploy(part) do
-    @doc "
-      Trigger Frontend Deploy Webhooks
-    "
 
-    url = System.get_env("WEBHOOK_API")
-    api_key = System.get_env("WEBHOOK_KEY")
+    url = System.get_env("WEBHOOK_URL", "please_configure_url")
+    api_key = System.get_env("WEBHOOK_KEY", "please_configure_key")
 
-    body = [part: part]
-    {_status, result} = JSON.encode(body)
+    body = %{"part" => part}
+    result = Jason.encode!(body)
 
     options = [{"X-API-KEY", api_key}, {"Content-Type", "application/json"}]
 
     HTTPoison.start
-    HTTPoison.post!(url, result, options)
+    {:ok, response} = HTTPoison.post!(url, result, options)
+    Logger.debug(response)
   end
 end
