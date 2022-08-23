@@ -26,6 +26,13 @@ services:
     networks:
       - pg-net
 
+  httpbin:
+    image: kennethreitz/httpbin
+    ports:
+      - "5481:80"
+    networks:
+      - pg-net
+
 networks:
   pg-net:
     external: true
