@@ -14,3 +14,26 @@
     * config to `prod.exs`
     * config to `runtime.exs`
     * config to `config.exs`
+
+
+## Webhook Api Spec
+
+### Receives from Manager
+
+**Header**
+
+* `X-API-KEY`, with a respective Key
+
+**Body**
+
+```json
+{part: "school"}
+```
+
+### Implementation
+
+* hardcoded Api Keys
+* public URL
+* hardcoded Array of objects
+  * with `{part: "school", url: "https://webhook"}`
+* to get url for **part** do some array filtering
