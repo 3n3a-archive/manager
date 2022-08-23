@@ -22,6 +22,7 @@ defmodule ManagerWeb.ExamController do
 
     case School.create_exam(exam_params) do
       {:ok, exam} ->
+        trigger_deploy()
         conn
         |> put_flash(:info, "Exam created successfully.")
         |> redirect(to: Routes.exam_path(conn, :show, exam))
@@ -50,6 +51,7 @@ defmodule ManagerWeb.ExamController do
 
     case School.update_exam(exam, exam_params) do
       {:ok, exam} ->
+        trigger_deploy()
         conn
         |> put_flash(:info, "Exam updated successfully.")
         |> redirect(to: Routes.exam_path(conn, :show, exam))
@@ -63,8 +65,13 @@ defmodule ManagerWeb.ExamController do
     exam = School.get_exam!(id)
     {:ok, _exam} = School.delete_exam(exam)
 
+    trigger_deploy()
     conn
     |> put_flash(:info, "Exam deleted successfully.")
     |> redirect(to: Routes.exam_path(conn, :index))
+  end
+
+  def trigger_deploy() do
+    WebhookAdapter.trigger_deploy("school")
   end
 end
