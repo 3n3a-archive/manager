@@ -1,0 +1,53 @@
+version: '3'
+services:
+    webserver:
+        image: 3n3a/manager:2.0.1
+        # command: eval "ManagerWeb.Release.migrate"
+        depends_on:
+            - db
+        environment:
+            DATABASE_URL: ecto://postgres:postgres@db/manager
+            SECRET_KEY_BASE: AEHwSQet/650xylvkc2r/XzOBS0HunCyRMNEVzebnlB1gUWfs80leMzKlIgioFul
+            PHX_HOST: localhost
+            WEBHOOK_URL: 
+            WEBHOOK_KEY: 
+        ports:
+            - 8004:4000
+            - 8005:5000
+        networks:
+            - manager
+
+    db:
+      image: 'postgres:latest'
+      restart: "always"
+      ports:
+        - 5432:5432
+      environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+        POSTGRES_DB: manager
+      volumes:
+        - pgdb-data:/var/lib/postgresql/data/
+      networks:
+        - manager
+
+    admin:
+      image: 'dpage/pgadmin4'
+      restart: "always"
+      environment:
+        PGADMIN_DEFAULT_EMAIL: "postgres@postgres.com"
+        PGADMIN_DEFAULT_PASSWORD: "postgres"
+      volumes:
+        - pgadmin4-data:/var/lib/pgadmin
+        - ./config/servers.json:/pgadmin4/servers.json
+      ports:
+        - "5480:80"
+      networks:
+        - manager
+
+networks:
+    manager:
+
+volumes:
+  pgadmin4-data:
+  pgdb-data:
