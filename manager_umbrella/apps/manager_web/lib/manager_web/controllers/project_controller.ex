@@ -17,6 +17,7 @@ defmodule ManagerWeb.ProjectController do
   def create(conn, %{"project" => project_params}) do
     case Homepage.create_project(project_params) do
       {:ok, project} ->
+        trigger_deploy()
         conn
         |> put_flash(:info, "Project created successfully.")
         |> redirect(to: Routes.project_path(conn, :show, project))
@@ -42,6 +43,7 @@ defmodule ManagerWeb.ProjectController do
 
     case Homepage.update_project(project, project_params) do
       {:ok, project} ->
+        trigger_deploy()
         conn
         |> put_flash(:info, "Project updated successfully.")
         |> redirect(to: Routes.project_path(conn, :show, project))
@@ -55,8 +57,13 @@ defmodule ManagerWeb.ProjectController do
     project = Homepage.get_project!(id)
     {:ok, _project} = Homepage.delete_project(project)
 
+    trigger_deploy()
     conn
     |> put_flash(:info, "Project deleted successfully.")
     |> redirect(to: Routes.project_path(conn, :index))
+  end
+
+  def trigger_deploy() do
+    WebhookAdapter.trigger_deploy("home")
   end
 end

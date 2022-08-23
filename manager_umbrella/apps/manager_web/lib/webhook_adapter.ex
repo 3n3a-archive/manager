@@ -16,7 +16,15 @@ defmodule WebhookAdapter do
     options = [{"Content-Type", "application/json"}]
 
     HTTPoison.start
-    {:ok, response} = HTTPoison.post!(url, result, options)
-    Logger.debug(response)
+
+    case HTTPoison.post(url, result, options) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        Logger.info("Webhook Sucessfully Triggered")
+        Logger.debug(body)
+      {:ok, %HTTPoison.Response{status_code: 404}} ->
+        Logger.debug("Not found :(")
+      {:error, %HTTPoison.Error{reason: reason}} ->
+        Logger.error(reason)
+    end
   end
 end
