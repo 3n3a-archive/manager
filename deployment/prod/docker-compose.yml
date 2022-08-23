@@ -1,7 +1,7 @@
 version: '3'
 services:
     webserver:
-        image: 3n3a/manager:2.0.11
+        image: 3n3a/manager:2.0.12
         depends_on:
             - db
         environment:
