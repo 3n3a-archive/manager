@@ -27,7 +27,7 @@
 **Body**
 
 ```json
-{part: "school"}
+{"part": "school"}
 ```
 
 ### Implementation
