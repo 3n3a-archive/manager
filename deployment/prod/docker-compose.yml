@@ -9,7 +9,8 @@ services:
             DATABASE_URL: ecto://postgres:postgres@db/manager
             SECRET_KEY_BASE: AEHwSQet/650xylvkc2r/XzOBS0HunCyRMNEVzebnlB1gUWfs80leMzKlIgioFul
             PHX_HOST: localhost
-            W
+            WEBHOOK_URL: 
+            WEBHOOK_KEY: 
         ports:
             - 8004:4000
             - 8005:5000
