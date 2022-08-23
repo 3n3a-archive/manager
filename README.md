@@ -1,4 +1,4 @@
-# Manager App for 3n3a.ch
+# Manager App
 
 > Manages various digital things
 
