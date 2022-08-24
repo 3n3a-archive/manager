@@ -23,7 +23,7 @@ defmodule ManagerApi.ExamView do
       name: exam.name,
       mark: exam.mark,
       type: exam.type,
-      subject: get_subject_name(exam)
+      subject: get_subject_name(exam),
       status: exam.status
     }
   end
