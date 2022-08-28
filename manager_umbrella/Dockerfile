@@ -19,6 +19,9 @@ ARG DEBIAN_VERSION=bullseye-20210902-slim
 ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
 ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 
+ARG SECRET_WEBHOOK_URL
+ARG SECRET_WEBHOOK_KEY
+
 ########################################################
 #                        BUILDER                       #
 ########################################################
@@ -98,15 +101,8 @@ RUN chown nobody /app
 
 # set runner ENV
 ENV MIX_ENV="prod"
-
-# set secrets
-RUN --mount=type=bind,target=. \
-  --mount=type=secret,id=WEBHOOK_URL \
-  export WEBHOOK_URL=$(cat /run/secrets/WEBHOOK_URL)
-
-RUN --mount=type=bind,target=. \
-  --mount=type=secret,id=WEBHOOK_KEY \
-  export WEBHOOK_KEY=$(cat /run/secrets/WEBHOOK_KEY)
+ENV WEBHOOK_URL=$SECRET_WEBHOOK_URL
+ENV WEBHOOK_KEY=$SECRET_WEBHOOK_KEY
 
 # Only copy the final release from the build stage
 COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/manager_umbrella ./
