@@ -99,6 +99,15 @@ RUN chown nobody /app
 # set runner ENV
 ENV MIX_ENV="prod"
 
+# set secrets
+RUN --mount=type=bind,target=. \
+  --mount=type=secret,id=WEBHOOK_URL \
+  export WEBHOOK_URL=$(cat /run/secrets/WEBHOOK_URL)
+
+RUN --mount=type=bind,target=. \
+  --mount=type=secret,id=WEBHOOK_KEY \
+  export WEBHOOK_KEY=$(cat /run/secrets/WEBHOOK_KEY)
+
 # Only copy the final release from the build stage
 COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/manager_umbrella ./
 

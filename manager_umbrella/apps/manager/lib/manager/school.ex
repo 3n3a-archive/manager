@@ -18,7 +18,7 @@ defmodule Manager.School do
 
   """
   def list_exams do
-    Repo.all(Exam)
+    Repo.all(from e in Exam, order_by: e.name)
   end
 
   @doc """
@@ -117,7 +117,7 @@ defmodule Manager.School do
 
   """
   def list_subjects do
-    Repo.all(Subject)
+    Repo.all(from s in Subject, order_by: s.name)
   end
 
   @doc """
@@ -130,7 +130,7 @@ defmodule Manager.School do
 
   """
   def select_list_subjects do
-    Repo.all from p in Subject, select: {p.name, p.id}
+    Repo.all from p in Subject, select: {fragment("concat(?, ' - ', ?)", p.name, p.description), p.id}
   end
 
   @doc """

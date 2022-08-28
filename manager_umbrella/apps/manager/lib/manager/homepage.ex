@@ -18,7 +18,7 @@ defmodule Manager.Homepage do
 
   """
   def list_projects do
-    Repo.all(Project)
+    Repo.all(from p in Project, order_by: p.title)
   end
 
   @doc """
