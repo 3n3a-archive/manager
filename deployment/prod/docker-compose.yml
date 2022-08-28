@@ -1,7 +1,7 @@
 version: '3'
 services:
     webserver:
-        image: ghcr.io/3n3a/manager:latest
+        image: ghcr.io/3n3a/manager:2.1.1
         depends_on:
             - db
         environment:
