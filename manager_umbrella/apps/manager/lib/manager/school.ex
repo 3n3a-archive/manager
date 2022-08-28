@@ -18,7 +18,7 @@ defmodule Manager.School do
 
   """
   def list_exams do
-    Repo.all(Exam)
+    Repo.all(from e in Exam, order_by: e.name)
   end
 
   @doc """
@@ -117,7 +117,7 @@ defmodule Manager.School do
 
   """
   def list_subjects do
-    Repo.all(Subject)
+    Repo.all(from s in Subject, order_by: s.name)
   end
 
   @doc """
