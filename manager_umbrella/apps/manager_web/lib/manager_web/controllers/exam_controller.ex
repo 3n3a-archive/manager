@@ -13,7 +13,7 @@ defmodule ManagerWeb.ExamController do
   def new(conn, _params) do
     changeset = School.change_exam(%Exam{})
     subject_list = School.select_list_subjects()
-    
+
     render(conn, "new.html", changeset: changeset, subject_list: subject_list)
   end
 
@@ -22,7 +22,7 @@ defmodule ManagerWeb.ExamController do
 
     case School.create_exam(exam_params) do
       {:ok, exam} ->
-        trigger_deploy()
+        trigger_deploy(exam)
         conn
         |> put_flash(:info, "Exam created successfully.")
         |> redirect(to: Routes.exam_path(conn, :show, exam))
@@ -51,7 +51,7 @@ defmodule ManagerWeb.ExamController do
 
     case School.update_exam(exam, exam_params) do
       {:ok, exam} ->
-        trigger_deploy()
+        trigger_deploy(exam)
         conn
         |> put_flash(:info, "Exam updated successfully.")
         |> redirect(to: Routes.exam_path(conn, :show, exam))
@@ -65,13 +65,15 @@ defmodule ManagerWeb.ExamController do
     exam = School.get_exam!(id)
     {:ok, _exam} = School.delete_exam(exam)
 
-    trigger_deploy()
+    trigger_deploy(exam)
     conn
     |> put_flash(:info, "Exam deleted successfully.")
     |> redirect(to: Routes.exam_path(conn, :index))
   end
 
-  def trigger_deploy() do
-    WebhookAdapter.trigger_deploy("school")
+  def trigger_deploy(exam) do
+    if exam.status == :live do
+      WebhookAdapter.trigger_deploy("school")
+    end
   end
 end
