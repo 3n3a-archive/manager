@@ -5,8 +5,14 @@ defmodule ManagerApi.ExamView do
   alias Manager.School
 
 
-  def get_subject_name(exam) do
-    School.get_subject!(exam.subject_id).name
+  def get_subject(exam) do
+    subject = School.get_subject!(exam.subject_id)
+    %{
+      id: subject.id,
+      name: subject.name,
+      description: subject.description,
+      teacher: subject.teacher
+    }
   end
 
   def render("index.json", %{exams: exams}) do
@@ -23,7 +29,7 @@ defmodule ManagerApi.ExamView do
       name: exam.name,
       mark: exam.mark,
       type: exam.type,
-      subject: get_subject_name(exam),
+      subject: get_subject(exam),
       status: exam.status
     }
   end
