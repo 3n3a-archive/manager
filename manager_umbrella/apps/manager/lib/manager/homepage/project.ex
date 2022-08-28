@@ -18,8 +18,7 @@ defmodule Manager.Homepage.Project do
     project
     |> cast(attrs, [:title, :body, :href, :color, :customBg, :status])
     |> validate_required([:title, :body, :href, :status])
-    |> unique_constraint(:name)
-    |> unique_constraint(:href)
     |> unique_constraint(:title)
+    |> unique_constraint(:href)
   end
 end
