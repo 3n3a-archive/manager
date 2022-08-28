@@ -17,7 +17,7 @@ defmodule ManagerWeb.SubjectController do
   def create(conn, %{"subject" => subject_params}) do
     case School.create_subject(subject_params) do
       {:ok, subject} ->
-        trigger_deploy(subject)
+        trigger_deploy()
         conn
         |> put_flash(:info, "Subject created successfully.")
         |> redirect(to: Routes.subject_path(conn, :show, subject))
@@ -43,7 +43,7 @@ defmodule ManagerWeb.SubjectController do
 
     case School.update_subject(subject, subject_params) do
       {:ok, subject} ->
-        trigger_deploy(subject)
+        trigger_deploy()
         conn
         |> put_flash(:info, "Subject updated successfully.")
         |> redirect(to: Routes.subject_path(conn, :show, subject))
@@ -57,15 +57,13 @@ defmodule ManagerWeb.SubjectController do
     subject = School.get_subject!(id)
     {:ok, _subject} = School.delete_subject(subject)
 
-    trigger_deploy(subject)
+    trigger_deploy()
     conn
     |> put_flash(:info, "Subject deleted successfully.")
     |> redirect(to: Routes.subject_path(conn, :index))
   end
 
-  def trigger_deploy(subject) do
-    if subject.status == :live do
-      WebhookAdapter.trigger_deploy("school")
-    end
+  def trigger_deploy() do
+    WebhookAdapter.trigger_deploy("school")
   end
 end
